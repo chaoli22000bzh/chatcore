@@ -37,3 +37,16 @@ assert.equal(chat.available().length,sample.messages.length);
 assert.throws(()=>core.create({messages:[{id:'x',text:'x',answer:'ok'},{id:'x',text:'y',answer:'ok'}]}),/dupliqué/);
 assert.throws(()=>chat.notify({}),/événement invalide/);
 console.log('OK : 17 assertions ChatCore (dialogue, état, événements, répétition, historique, réinitialisation).');
+
+const css=fs.readFileSync('v0.1/chatcore.css','utf8');
+const demo=fs.readFileSync('index.html','utf8');
+for(const theme of ['pure','dark','neon','space','80']){
+ assert.ok(css.includes('html[data-ctp-theme="'+theme+'"] .chatcore'),'Compatibilité C² '+theme);
+ assert.ok(demo.includes('<option value="'+theme+'">'),'Prévisualisation '+theme);
+}
+assert.match(css,/var\(--ctp-panel/,'Héritage des couleurs du conteneur C²');
+assert.match(css,/var\(--ctp-accent/,'Héritage de la couleur d’accent C²');
+assert.match(css,/\.chatcore \.cc-client/,'Bulles client distinctes');
+assert.match(css,/\.chatcore \.cc-me/,'Bulles technicien distinctes');
+assert.match(demo,/themeTest\.addEventListener\('change'/,'Changement de thème sans rechargement');
+console.log('OK : les cinq thèmes de C² sont couverts sans modifier le moteur conversationnel.');
