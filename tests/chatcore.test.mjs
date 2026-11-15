@@ -50,3 +50,12 @@ assert.match(css,/\.chatcore \.cc-client/,'Bulles client distinctes');
 assert.match(css,/\.chatcore \.cc-me/,'Bulles technicien distinctes');
 assert.match(demo,/themeTest\.addEventListener\('change'/,'Changement de thème sans rechargement');
 console.log('OK : les cinq thèmes de C² sont couverts sans modifier le moteur conversationnel.');
+
+const interfaceCode=fs.readFileSync('v0.1/chatcore-ui.js','utf8');
+assert.match(interfaceCode,/chat\.send\(item\.id\)/,'Un clic sur une phrase déclenche son envoi');
+assert.doesNotMatch(interfaceCode,/cc-sendline|cc-preview|class="cc-send"/,'La zone Envoyer est supprimée');
+assert.doesNotMatch(interfaceCode,/send\.addEventListener/,'Aucun second clic requis');
+assert.match(interfaceCode,/class="cc-choices"/,'Les messages prédéfinis restent accessibles');
+assert.match(interfaceCode,/cc-history/,'L’historique de conversation est conservé');
+assert.match(css,/cc-hint/,'L’interface indique le fonctionnement en un clic');
+console.log('OK : interface envoi direct sans bouton Envoyer.');
