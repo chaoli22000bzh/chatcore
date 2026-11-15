@@ -7,7 +7,7 @@
    const chat=global.ChatCore.create(scenario);
    const client=scenario.clientName||'Client';
    root.classList.add('chatcore');
-   root.innerHTML='<div class="cc-head"><span class="cc-avatar" aria-hidden="true"></span><div><strong class="cc-person"></strong><small>Conversation de support</small></div></div><div class="cc-history" role="log" aria-live="polite" aria-relevant="additions"></div><div class="cc-compose"><strong>Quel message veux-tu envoyer ?</strong><div class="cc-choices" role="group" aria-label="Messages à envoyer directement"></div><p class="cc-hint" aria-live="polite">Clique sur une phrase pour l'envoyer.</p></div>';
+   root.innerHTML='<div class="cc-head"><span class="cc-avatar" aria-hidden="true"></span><div><strong class="cc-person"></strong><small>Conversation de support</small></div></div><div class="cc-history" role="log" aria-live="polite" aria-relevant="additions"></div><div class="cc-compose"><strong>Quel message veux-tu envoyer ?</strong><div class="cc-choices" role="group" aria-label="Messages à envoyer directement"></div><p class="cc-hint" aria-live="polite">Clique sur une phrase pour l\'envoyer.</p></div>';
    root.querySelector('.cc-person').textContent=client;
    root.querySelector('.cc-avatar').textContent=client.split(/\s+/).map(x=>x[0]).join('').slice(0,2).toUpperCase();
    const historyHost=root.querySelector('.cc-history'),choiceHost=root.querySelector('.cc-choices'),hint=root.querySelector('.cc-hint');
