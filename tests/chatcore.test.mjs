@@ -151,6 +151,8 @@ repairChat.restart();
 assert.equal(repairChat.getState().facts.repairVerified,false,'Réinitialisation');
 console.log('OK : test 9, correction réelle et réouverture obligatoires.');
 
-assert.doesNotMatch(context.ChatCorePdfDemo.messages.find(x=>x.id==='repair-check').resolve({facts:{repairVerified:true,pdfAssociationChanged:true}}),/je viens de rouvrir|j'ai rouvert/,'Sophie ne s'attribue pas les manipulations');
-assert.match(context.ChatCorePdfDemo.messages.find(x=>x.id==='repair-check').resolve({facts:{repairVerified:true}}),/vous avez rouvert/,'Technicien auteur de la réouverture');
+const repairMessage=context.ChatCorePdfDemo.messages.find(x=>x.id==='repair-check');
+const fixedReply=repairMessage.resolve({facts:{repairVerified:true,pdfAssociationChanged:true}});
+assert.doesNotMatch(fixedReply,/je viens de rouvrir|j'ai rouvert/,'Sophie ne s’attribue pas les manipulations');
+assert.match(fixedReply,/vous avez rouvert/,'Technicien auteur de la réouverture');
 console.log('OK : Sophie distingue son constat des actions du technicien.');
