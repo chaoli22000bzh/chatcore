@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ChatCore - Laboratoire PDF D3-02</title>
+<link rel="stylesheet" href="./v0.1/chatcore.css">
+<link rel="stylesheet" href="./lab-pdf/windows-c2.css">
+<link rel="stylesheet" href="./lab-pdf/windows-scenario.css">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f1f5fa;color:#20364b;font:16px/1.5 Arial,sans-serif}
+main{max-width:1550px;margin:auto;padding:14px}h1{font-size:clamp(22px,3vw,29px);margin:0}
+.intro{margin:5px 0 14px;color:#52667a}.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(340px,0.9fr);gap:15px;align-items:start}
+.layout>section{min-width:0}.layout h2{font-size:18px;margin:0 0 8px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0 16px}
+.toolbar select,.toolbar button{border:1px solid #9db1c2;border-radius:8px;padding:9px;background:white;color:#193d5c;font:inherit;min-height:42px}
+.toolbar button{cursor:pointer}.lab-status{font-size:14px;font-weight:bold}
+.lab-tip{font-size:14px;margin:10px 0;color:#465a6b}.lab-tip strong{color:#1b405e}
+#pdf-windows{min-width:0}#pdf-chat{min-width:0}.chatcore .cc-history{height:clamp(250px,40vh,420px)}
+footer{margin-top:14px;font-size:13px;color:#52667a}
+@media(max-width:920px){.layout{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-color-scheme:dark){body{background:#101b29;color:#eaf1fa}.intro,.lab-tip,footer{color:#bbcadd}.lab-tip strong{color:#e8f1ff}.toolbar select,.toolbar button{background:#20364e;color:#eaf1fa;border-color:#586d80}}
+</style>
+</head>
+<body><main>
+<h1>ChatCore : laboratoire PDF <small>Test 1</small></h1>
+<p class="intro">Test autonome hors C². Poste Windows 11 issu d'une copie du simulateur D3-02, relié à ChatCore par ses événements techniques.</p>
+<div class="toolbar">
+<label for="speed">Vitesse de Sophie :</label><select id="speed"><option value="slow">Lente</option><option value="normal" selected>Normale</option><option value="fast">Rapide</option></select>
+<button type="button" id="restart">↻ Recommencer le test</button>
+<span id="status" class="lab-status" aria-live="polite">Facture non ouverte</span>
+</div>
+<div class="layout">
+<section aria-label="Windows 11 simulé">
+<h2>Poste distant : PC-SMARTIN</h2>
+<div id="pdf-windows"></div>
+<p class="lab-tip"><strong>Action :</strong> clique sur « Documents », puis sur <code>factureorange.pdf</code>. Aucun bouton ne simule l'événement : la réponse de Sophie dépend de la trace produite par Windows.</p>
+</section>
+<section aria-label="Dialogue client">
+<h2>Conversation avec Sophie</h2>
+<div id="pdf-chat"></div>
+<p class="lab-tip">Tu peux demander à Sophie si elle voit la facture <strong>avant et après</strong> son ouverture.</p>
+</section>
+</div>
+<footer><a href="./">Retour au laboratoire DHCP</a>. Cette page n'écrit rien dans C², R2D3 ou DiagTree.</footer>
+</main>
+<script src="./v0.1/chatcore.js"></script>
+<script src="./v0.1/chatcore-ui.js"></script>
+<script src="./lab-pdf/windows-c2.js"></script>
+<script src="./lab-pdf/windows-scenario.js"></script>
+<script src="./lab-pdf/scenario-chat.js"></script>
+<script>
+'use strict';
+const win=new C2Windows11('#pdf-windows',C2WindowsScenarios.D301);
+const ui=ChatCoreUI.mount('#pdf-chat',ChatCorePdfDemo);
+const status=document.getElementById('status');
+const speed=document.getElementById('speed');
+speed.addEventListener('change',()=>ui.setTypingSpeed(speed.value));
+document.getElementById('pdf-windows').addEventListener('c2win:file-open',event=>{
+  // Ne croire que la trace du vrai simulateur Windows ; ignorer tout autre fichier.
+  if(win.has('file-open',e=>e.file==='factureorange.pdf'&&e.app==='chrome')){
+    ui.setFacts({invoiceOpened:true});
+    status.textContent='Facture ouverte dans Google Chrome';
+  }
+});
+document.getElementById('restart').addEventListener('click',()=>{
+  // Nouveau poste et nouvelle conversation ; les autres moteurs et documents restent inchangés.
+  win.state={connected:false,association:{...(win.scenario.association||{})},trace:[],openWindow:null,currentFile:null,currentApp:null};
+  win.render();
+  ui.restart();
+  status.textContent='Facture non ouverte';
+});
+</script></body></html>
