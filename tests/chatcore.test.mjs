@@ -139,7 +139,7 @@ assert.equal(repairChat.send('repair-check'),true);
 assert.match(repairChat.getState().history.at(-1).text,/pas encore vérifié/,'Reader ouvert manuellement ne répare pas par défaut');
 repairChat.setFacts({pdfAssociationChanged:true});
 assert.equal(repairChat.send('repair-check'),true);
-assert.match(repairChat.getState().history.at(-1).text,/préfère rouvrir/,'Association seule ne suffit pas');
+assert.match(repairChat.getState().history.at(-1).text,/Pouvez-vous rouvrir ma facture/,'Association seule ne suffit pas');
 repairChat.setFacts({repairVerified:true});
 assert.equal(repairChat.send('repair-check'),true);
 assert.match(repairChat.getState().history.at(-1).text,/problème est résolu/);
@@ -150,3 +150,7 @@ assert.ok(pdfLab.includes("win.state.association['.pdf']==='reader'"),'Associati
 repairChat.restart();
 assert.equal(repairChat.getState().facts.repairVerified,false,'Réinitialisation');
 console.log('OK : test 9, correction réelle et réouverture obligatoires.');
+
+assert.doesNotMatch(context.ChatCorePdfDemo.messages.find(x=>x.id==='repair-check').resolve({facts:{repairVerified:true,pdfAssociationChanged:true}}),/je viens de rouvrir|j'ai rouvert/,'Sophie ne s'attribue pas les manipulations');
+assert.match(context.ChatCorePdfDemo.messages.find(x=>x.id==='repair-check').resolve({facts:{repairVerified:true}}),/vous avez rouvert/,'Technicien auteur de la réouverture');
+console.log('OK : Sophie distingue son constat des actions du technicien.');
