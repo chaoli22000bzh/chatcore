@@ -1,0 +1,164 @@
+/* Copie de test autonome extraite de chaoli22000bzh/C2 (assets/windows-c2/windows-c2.css), SHA 5d53eb456f920d02187a5eb6496b64cf6fd42f27. Ne pas modifier C2 depuis ce laboratoire. */
+/* Windows C² — moteur commun */
+.c2win{--line:#d7dde2;--ink:#20252b;--blue:#0b63b6;font:13px "Segoe UI",Arial,sans-serif;color:var(--ink);display:block;background:#101820;border-radius:10px;overflow:hidden;box-shadow:0 10px 28px #0002}
+.c2win *{box-sizing:border-box}.c2win button{font:inherit}.c2win-remote{height:43px;padding:0 14px;background:#1d2833;color:#fff;display:flex;align-items:center;justify-content:space-between}.c2win-remote span{color:#5ee47d}.c2win-desktop{height:650px;position:relative;overflow:hidden;background:radial-gradient(circle at 62% 43%,#65c4f2 0 5%,#188bd5 20%,#075cac 45%,#063979 75%,#062455 100%)}
+.c2win-desktop:before{content:"";position:absolute;left:50%;top:43%;width:260px;height:210px;transform:translate(-50%,-50%) rotate(-4deg);background:linear-gradient(90deg,transparent 48%,#b9e8ff99 49% 51%,transparent 52%),linear-gradient(0deg,transparent 48%,#b9e8ff99 49% 51%,transparent 52%);border:4px solid #aee5ff77;box-shadow:inset 0 0 45px #bdeeff55,0 15px 35px #003d}
+.c2win-icons{position:absolute;z-index:2;top:12px;left:8px;width:190px;display:grid;grid-template-columns:82px 82px;gap:8px}.c2win-icons button{height:82px;border:0;background:transparent;color:#fff;text-shadow:0 1px 3px #000;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:default}.c2win-icons button:hover{background:#ffffff1c;border-radius:5px}.c2win-icons span{font-size:12px;text-align:center}
+.c2ico{display:inline-grid;place-items:center;width:30px;height:30px;vertical-align:middle;flex:none}.c2ico.folder{background:#f6c33b;border-radius:3px;position:relative}.c2ico.folder:before{content:"";position:absolute;top:-5px;left:3px;width:13px;height:7px;background:#f6c33b;border-radius:3px 3px 0 0}.c2ico.chrome{border-radius:50%;background:radial-gradient(circle,#fff 0 15%,#4285f4 16% 30%,transparent 31%),conic-gradient(#db4437 0 33%,#f4b400 0 66%,#0f9d58 0);box-shadow:0 0 0 1px #0002}.c2ico.reader{background:#c8202f;border-radius:5px;position:relative}.c2ico.reader:after{content:"A";font:700 21px Georgia;color:#fff;transform:skew(-8deg)}.c2ico.pdf{width:25px;height:32px;background:#fff;border:1px solid #ccd2d7;position:relative}.c2ico.pdf:after{content:"⌁";position:absolute;inset:5px 3px auto;color:#d7192d;font:bold 20px Georgia;transform:rotate(-10deg)}.c2ico.file{background:#477bc4;color:#fff;border-radius:2px}.c2ico.file:after{content:"FILE";font:bold 7px Arial}.c2ico.big{width:68px;height:68px}
+.c2win-stage{position:absolute;z-index:4;inset:0 0 48px}.c2win-window{position:absolute;left:4%;top:4%;width:92%;height:91%;background:#fff;border:1px solid #aeb7bf;border-radius:8px;overflow:hidden;box-shadow:0 12px 30px #0005}.c2win-window>header{height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 11px;background:#fbfbfb;border-bottom:1px solid var(--line);font-weight:600}.c2win-window>header button{border:0;background:transparent;font-size:20px;width:35px;height:34px}.c2win-explorerbar,.c2win-browserbar,.c2win-readerbar,.c2win-printbar{height:48px;padding:8px 14px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}.c2win-browserbar>div{flex:1;background:#f2f3f5;border-radius:16px;padding:6px 12px}.c2win-browserbar button,.c2win-readerbar button,.c2win-printbar button{border:1px solid #bdc5cc;background:#fff;border-radius:5px;padding:7px 11px}.c2win-readerbar button:first-of-type{margin-left:auto}.c2win-files{height:calc(100% - 48px);overflow:auto;padding:5px 14px;background:#fff}.c2win-files>button{width:100%;height:52px;border:0;border-bottom:1px solid #edf0f2;background:#fff;display:flex;align-items:center;gap:12px;text-align:left}.c2win-files>button:hover{background:#e8f2fc}.c2win-files small{display:block;color:#66727c;margin-top:2px}
+.c2win-document,.c2win-preview{height:calc(100% - 48px);overflow:auto;background:#5f6469;padding:20px;display:flex;justify-content:center;align-items:flex-start}.c2win-preview{height:calc(100% - 48px);padding:12px}.c2win-printbar{height:48px;justify-content:space-between}.c2win-printbar button{background:#0878d1;color:#fff;border-color:#0878d1}.c2win-paper{width:min(610px,94%);min-height:760px;background:#fff;padding:32px;box-shadow:0 3px 15px #0007}.c2win-browserhome,.c2win-appempty{height:calc(100% - 48px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}.c2win-browserhome>div{min-width:330px;background:#f1f3f4;border-radius:22px;padding:11px 20px;color:#6b7278}
+.c2win-readerhome{height:calc(100% - 48px);display:grid;grid-template-columns:145px 1fr}.c2win-readerhome nav{padding:18px 12px;background:#fafafa;border-right:1px solid #e1e1e1;display:flex;flex-direction:column;gap:11px}.c2win-readerhome main{padding:22px}.c2win-tools{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0 28px}.c2win-tools span,.c2win-settingcard{border:1px solid #e0e0e0;border-radius:7px;padding:13px;background:#fff}
+.c2win-settings{height:100%;display:grid;grid-template-columns:210px 1fr}.c2win-settings nav{background:#f3f3f3;padding:18px 10px;display:flex;flex-direction:column;gap:4px}.c2win-settings nav span,.c2win-settings nav b{padding:8px;border-radius:5px}.c2win-settings nav b{background:#e5e5e5;border-left:3px solid #0878d1}.c2win-settings main{padding:24px;overflow:auto}.c2win-settingcard{margin:8px 0}.c2win-settingcard small{display:block;color:#68727b;margin-top:3px}.c2win-assoc{display:flex;align-items:center;justify-content:space-between;border:1px solid #ddd;border-radius:7px;padding:10px;margin-top:8px}.c2win-assoc button{border:1px solid #ccd2d7;background:#fff;border-radius:5px;padding:7px 10px;display:flex;align-items:center;gap:7px}
+.c2win-start{position:absolute;z-index:8;left:50%;bottom:55px;transform:translateX(-50%);width:390px;padding:20px;background:#eef6fbf4;backdrop-filter:blur(20px);border-radius:9px;box-shadow:0 10px 30px #0005}.c2win-search{background:#fff;border:1px solid #ccd5dc;border-radius:5px;padding:9px;margin-bottom:14px}.c2win-start button{width:50%;border:0;background:transparent;padding:9px;display:flex;align-items:center;gap:9px}.c2win-taskbar{position:absolute;z-index:9;bottom:0;left:0;right:0;height:48px;background:#eef5fadf;display:flex;align-items:center;justify-content:center;gap:10px;border-top:1px solid #fff9}.c2win-taskbar button{border:0;background:transparent;width:38px;height:38px}.c2win-taskbar>span{position:absolute;right:75px}.c2win-taskbar time{position:absolute;right:10px;text-align:right;font-size:11px}.c2win-taskbar time small{display:block}.c2win-winlogo{font-size:24px}.c2win-toast{position:absolute;z-index:20;right:15px;bottom:62px;background:#20262ceF;color:#fff;border-radius:7px;padding:11px 14px;box-shadow:0 8px 24px #0005}
+@media(max-width:850px){.c2win-desktop{height:590px}.c2win-settings,.c2win-readerhome{grid-template-columns:1fr}.c2win-settings nav,.c2win-readerhome nav{display:none}}
+.c2win-choose{padding:28px;max-width:620px;margin:auto}.c2win-choose h2{font-size:19px;margin:0 0 18px}.c2win-choose>button{width:100%;display:flex;align-items:center;gap:13px;border:1px solid #d4d9dd;background:#fff;border-radius:7px;padding:11px;margin:7px 0;text-align:left}.c2win-choose>button:hover{background:#eef6fc}.c2win-choose>button span{display:grid}.c2win-choose small{color:#68727b;margin-top:2px}
+.c2ico.teams{background:#6264a7;border-radius:7px;color:#fff}.c2ico.teams:after{content:"T";font:bold 18px Arial}
+
+/* V4.6.155 — le calque de fenêtres ne doit jamais intercepter le bureau quand il est vide */
+.c2win-stage{pointer-events:none}.c2win-stage>.c2win-window{pointer-events:auto}
+/* Icônes système : silhouettes proches de Windows 11, sans emoji dépendant du navigateur */
+.c2win-winlogo{font-size:0!important;position:relative}
+.c2win-winlogo:before{content:"";display:block;width:17px;height:17px;margin:auto;background:linear-gradient(90deg,#1267b1 0 47%,transparent 47% 53%,#1267b1 53%),linear-gradient(0deg,#1267b1 0 47%,transparent 47% 53%,#1267b1 53%)}
+.c2ico.trash{font-size:0!important;position:relative;width:25px;height:30px;border:2px solid #dce9ef;border-top:0;border-radius:2px;background:linear-gradient(90deg,#b8d5e1 0 20%,#eef8fb 20% 40%,#b8d5e1 40% 60%,#eef8fb 60% 80%,#b8d5e1 80%);box-shadow:inset 0 0 0 1px #6f9bad}
+.c2ico.trash:before{content:"";position:absolute;left:-3px;right:-3px;top:-6px;height:5px;background:#dce9ef;border:1px solid #7197a8;border-radius:2px}
+.c2ico.trash:after{content:"";position:absolute;width:9px;height:3px;left:6px;top:-10px;border:2px solid #dce9ef;border-bottom:0;border-radius:3px 3px 0 0}
+.c2ico.reader{font-size:0!important;background:#d7192d;border-radius:6px;position:relative;overflow:hidden}
+.c2ico.reader:after{content:"";position:absolute;inset:5px;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M31 8c-1 13-5 25-12 37-6 10-10 10-11 7-2-5 12-10 25-11 12-1 24 2 23 7-1 4-12 0-20-8-8-8-13-18-10-21 3-3 8 7 12 14' fill='none' stroke='white' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+
+/* V4.6.156 — raccourcis bureau réellement interactifs */
+.c2win-icons{z-index:12!important;pointer-events:auto!important}.c2win-icons button{pointer-events:auto!important;position:relative;z-index:13}
+/* Démarrer Windows 11 : quatre carreaux lisibles à l'échelle de la barre */
+.c2win-winlogo{width:42px!important;height:42px!important;padding:0!important}
+.c2win-winlogo:before{width:23px!important;height:23px!important;background:linear-gradient(90deg,#087cd5 0 46%,transparent 46% 54%,#087cd5 54%),linear-gradient(0deg,#087cd5 0 46%,transparent 46% 54%,#087cd5 54%)!important}
+/* Acrobat Reader : tuile rouge + glyphe Acrobat blanc */
+.c2ico.reader{width:31px!important;height:31px!important;background:#e21f2f!important;border-radius:6px!important}
+.c2ico.reader:after{inset:4px!important}
+
+/* V4.6.157 — ordre des plans : bureau < fenêtres < Démarrer < barre des tâches */
+.c2win-icons{z-index:2!important}.c2win-icons button{z-index:2!important}
+.c2win-stage{z-index:20!important}.c2win-start{z-index:40!important}.c2win-taskbar{z-index:50!important}
+/* Menu Démarrer plus proche de Windows 11 */
+.c2win-start{width:430px!important;padding:22px 26px 24px!important;border-radius:10px!important;background:#edf6fcf7!important}
+.c2win-start button{width:33.333%!important;min-height:76px!important;display:inline-flex!important;vertical-align:top;flex-direction:column!important;justify-content:center;gap:5px!important;text-align:center!important}
+.c2win-start button[data-c2="settings"]{width:33.333%!important}.c2win-start .c2win-search{margin-bottom:18px!important}
+/* Paramètres : cartes réellement navigables */
+.c2win-settingcard{width:100%;position:relative;display:block;text-align:left;font:inherit;color:inherit;cursor:pointer}
+button.c2win-settingcard{border:1px solid #e0e0e0}.c2win-settingcard em{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-style:normal;font-size:22px}
+.c2win-settingcard.muted{cursor:default}.c2win-settings-search{border:1px solid #bfc8cf;border-bottom:2px solid #0878d1;border-radius:5px;padding:9px 11px;margin:12px 0 18px;background:#fff}
+.c2win-installed{display:grid;grid-template-columns:38px 1fr 35px;align-items:center;gap:10px;border-bottom:1px solid #e3e6e8;padding:11px 6px}.c2win-installed small{display:block;color:#69757d;margin-top:2px}.c2win-installed button,.c2win-back{border:0;background:transparent;padding:7px}
+
+
+/* V4.6.170 — finition visuelle du menu Démarrer Windows 11 */
+.c2win-start{
+ width:440px!important;
+ padding:18px 24px 24px!important;
+ background:rgba(239,247,252,.97)!important;
+ border:1px solid rgba(255,255,255,.85)!important;
+ border-radius:12px!important;
+ box-shadow:0 18px 42px rgba(0,0,0,.28)!important;
+}
+.c2win-start .c2win-search{
+ height:38px;
+ display:flex;
+ align-items:center;
+ padding:0 12px!important;
+ margin:0 0 18px!important;
+ background:#fff!important;
+ border:1px solid #c8d1d8!important;
+ border-bottom:2px solid #1677b8!important;
+ border-radius:6px!important;
+ color:#333;
+ box-shadow:0 1px 2px #0000000d;
+}
+.c2win-start button{
+ width:33.333%!important;
+ min-height:92px!important;
+ padding:10px 5px!important;
+ display:inline-flex!important;
+ align-items:center!important;
+ justify-content:flex-start!important;
+ flex-direction:column!important;
+ gap:8px!important;
+ border-radius:7px!important;
+ line-height:1.2!important;
+ color:#111!important;
+}
+.c2win-start button:hover{background:rgba(255,255,255,.68)!important}
+.c2win-start button .c2ico{width:34px;height:34px}
+.c2win-start button .c2ico.reader{width:34px!important;height:34px!important}
+
+/* Icône Paramètres : engrenage gris Windows 11, centre bleu */
+.c2ico.settings{
+ position:relative!important;
+ width:38px!important;
+ height:38px!important;
+ font-size:0!important;
+ border-radius:50%!important;
+ background:
+  radial-gradient(circle at center,#2779ad 0 18%,#f5f8fa 19% 28%,#7d8b95 29% 47%,transparent 48%)!important;
+ filter:drop-shadow(0 1px 1px #0002);
+}
+.c2ico.settings:before{
+ content:""!important;
+ position:absolute;
+ inset:2px;
+ background:#7d8b95;
+ clip-path:polygon(42% 0,58% 0,62% 13%,72% 17%,83% 9%,94% 20%,86% 31%,90% 41%,100% 45%,100% 60%,87% 64%,83% 74%,91% 84%,80% 95%,69% 87%,59% 91%,56% 100%,42% 100%,38% 87%,28% 83%,17% 91%,6% 80%,14% 69%,10% 59%,0 56%,0 42%,13% 38%,17% 28%,9% 17%,20% 6%,31% 14%,41% 10%);
+ z-index:-1;
+}
+.c2ico.settings:after{
+ content:""!important;
+ position:absolute;
+ left:50%;top:50%;
+ width:10px;height:10px;
+ transform:translate(-50%,-50%);
+ border-radius:50%;
+ background:#2779ad;
+ border:3px solid #f5f8fa;
+}
+.c2win-start button[data-c2="settings"]{
+ width:33.333%!important;
+ min-height:92px!important;
+}
+
+
+/* V4.6.171 — barre des tâches : icônes Windows 11 et Explorateur harmonisées */
+.c2win-taskbar button[data-c2="start"],
+.c2win-taskbar button[data-c2="explorer"]{
+ width:40px!important;height:40px!important;padding:7px!important;
+ display:grid!important;place-items:center!important;
+}
+.c2win-taskbar button[data-c2="start"]:before{
+ width:24px!important;height:24px!important;margin:0!important;
+ background:
+ linear-gradient(90deg,#24a8e0 0 47%,transparent 47% 53%,#0786d5 53%),
+ linear-gradient(0deg,#168fd7 0 47%,transparent 47% 53%,#27afe3 53%)!important;
+ border-radius:2px;
+}
+.c2win-taskbar button[data-c2="explorer"] .c2ico.folder{
+ width:26px!important;height:21px!important;
+ margin:0!important;
+ border-radius:3px 3px 4px 4px!important;
+ background:linear-gradient(#ffc93e 0 24%,#ffd65b 25% 100%)!important;
+ box-shadow:inset 0 1px 0 #fff5;
+ position:relative;
+}
+.c2win-taskbar button[data-c2="explorer"] .c2ico.folder:before{
+ top:-5px!important;left:1px!important;width:12px!important;height:7px!important;
+ background:#e7a400!important;border-radius:4px 4px 0 0!important;
+}
+.c2win-taskbar button[data-c2="explorer"] .c2ico.folder:after{
+ content:"";position:absolute;left:7px;right:4px;bottom:0;height:7px;
+ background:#168bd5;border-radius:4px 4px 0 0;
+ box-shadow:inset 0 2px 0 #275ca5;
+}
+
+
+/* V4.6.172 — icônes dédiées de barre des tâches, même boîte et même hauteur réelle */
+.c2win-taskbar .c2win-taskicon{
+ width:40px!important;height:40px!important;padding:7px!important;
+ display:grid!important;place-items:center!important;background:transparent!important;border:0!important;
+}
+.c2win-taskbar .c2win-taskicon .c2win-tasksvg{
+ display:block!important;width:26px!important;height:26px!important;overflow:visible;
+}
