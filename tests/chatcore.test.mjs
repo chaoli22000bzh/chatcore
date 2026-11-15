@@ -66,3 +66,7 @@ assert.match(interfaceCode,/prefers-reduced-motion/,'Respect des préférences d
 assert.match(interfaceCode,/cancelTyping\(\);chat\.restart\(\)/,'Redémarrage annule l’animation');
 assert.match(interfaceCode,/b\.disabled=!!typing/,'Empêche les nouveaux envois pendant la réponse');
 console.log('OK : écriture progressive et cycle de vie des réponses.');
+
+assert.match(interfaceCode,/item\.index\+1/,'Une lettre ajoutée à chaque étape');
+assert.match(interfaceCode,/Math\.max\(30,Math\.min\(65,5200\/chars\.length\)\)/,'Cadence ralentie et durée des longues réponses maîtrisée');
+console.log('OK : cadence de frappe ralentie.');
