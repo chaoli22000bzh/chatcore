@@ -23,7 +23,7 @@ html[data-ctp-theme="80"] .intro,html[data-ctp-theme="80"] .status,html[data-ctp
 </style></head>
 <body><main>
 <h1>ChatCore <small>V0.1</small></h1><p class="intro">Conversation client-technicien, sans IA, sans installation.</p>
-<div class="toolbar"><label for="theme-test">Thème C² :</label><select id="theme-test" aria-label="Prévisualisation du thème C²"><option value="pure">Clair</option><option value="dark">Sombre</option><option value="neon">TRON</option><option value="space">Star Wars</option><option value="80">Minitel 80</option></select><button id="reset" type="button">↻ Recommencer</button><button id="technical" type="button">Simuler : réseau rétabli</button><span id="state" class="status">Incident en cours</span></div>
+<div class="toolbar"><label for="theme-test">Thème C² :</label><select id="theme-test" aria-label="Prévisualisation du thème C²"><option value="pure">Clair</option><option value="dark">Sombre</option><option value="neon">TRON</option><option value="space">Star Wars</option><option value="80">Minitel 80</option></select><label for="speed-test">Vitesse de Sophie :</label><select id="speed-test" aria-label="Vitesse de frappe de Sophie"><option value="slow">Lente (65 ms)</option><option value="normal" selected>Normale (35 ms)</option><option value="fast">Rapide (15 ms)</option></select><button id="reset" type="button">↻ Recommencer</button><button id="technical" type="button">Simuler : réseau rétabli</button><span id="state" class="status">Incident en cours</span></div>
 <div id="chat" aria-label="Conversation avec Sophie"></div>
 <p class="info">Le sélecteur de thème sert uniquement à cette page de test. Dans C², ChatCore suit automatiquement le thème déjà sélectionné, même si celui-ci change pendant le dépannage.</p>
 <p class="info">Le bouton « Simuler : réseau rétabli » représente un événement reçu de R2D3. Il ne répare aucun vrai réseau : il modifie uniquement l'état du scénario de démonstration. Le chat reste actif. Pose ensuite la question « Sophie, est-ce que les ordinateurs accèdent maintenant au réseau ? » pour constater la différence.</p>
@@ -32,6 +32,8 @@ html[data-ctp-theme="80"] .intro,html[data-ctp-theme="80"] .status,html[data-ctp
 <script src="./v0.1/chatcore.js"></script><script src="./v0.1/chatcore-ui.js"></script><script src="./demo/scenario-dhcp.js"></script>
 <script>
 const ui=ChatCoreUI.mount('#chat',ChatCoreDemo);
+const speedTest=document.getElementById('speed-test');
+speedTest.addEventListener('change',()=>ui.setTypingSpeed(speedTest.value));
 const themeTest=document.getElementById('theme-test');
 document.documentElement.dataset.ctpTheme=themeTest.value;
 themeTest.addEventListener('change',()=>{document.documentElement.dataset.ctpTheme=themeTest.value;});
