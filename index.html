@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark">
+<title>ChatCore - Test du dialogue</title>
+<link rel="stylesheet" href="./v0.1/chatcore.css">
+<style>
+:root{color-scheme:light dark}*{box-sizing:border-box}body{margin:0;background:#f1f5fa;color:#213950;font:16px/1.5 Arial,sans-serif}main{max-width:800px;padding:14px;margin:auto}h1{font-size:clamp(22px,4vw,30px);margin:0}.intro{margin:6px 0 13px;color:#53677e}.toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:12px 0}.toolbar button{border:1px solid #91a9bf;background:#fff;color:#183b59;padding:10px 13px;min-height:44px;border-radius:9px;cursor:pointer}.status{font-size:13px;color:#4c657b}.info{font-size:13px;color:#53677e;line-height:1.5}button:focus-visible{outline:3px solid orange;outline-offset:2px}
+@media(prefers-color-scheme:dark){body{background:#101b29;color:#edf5fd}.intro,.status,.info{color:#b7cadb}.toolbar button{background:#20364e;color:#edf5fd;border-color:#4e6680}}
+</style></head>
+<body><main>
+<h1>ChatCore <small>V0.1</small></h1><p class="intro">Conversation client-technicien, sans IA, sans installation.</p>
+<div class="toolbar"><button id="reset" type="button">↻ Recommencer</button><button id="technical" type="button">Simuler : réseau rétabli</button><span id="state" class="status">Incident en cours</span></div>
+<div id="chat" aria-label="Conversation avec Sophie"></div>
+<p class="info">Le bouton « Simuler : réseau rétabli » représente un événement reçu de R2D3. Il ne répare aucun vrai réseau : il modifie uniquement l'état du scénario de démonstration. Le chat reste actif. Pose ensuite la question « Sophie, est-ce que les ordinateurs accèdent maintenant au réseau ? » pour constater la différence.</p>
+<p class="info">Dépôt indépendant : <a href="https://github.com/chaoli22000bzh/chatcore">GitHub ChatCore</a>. Aucun changement dans C², R2D3, DiagCore ou DiagTree.</p>
+</main>
+<script src="./v0.1/chatcore.js"></script><script src="./v0.1/chatcore-ui.js"></script><script src="./demo/scenario-dhcp.js"></script>
+<script>
+const ui=ChatCoreUI.mount('#chat',ChatCoreDemo);
+const state=document.getElementById('state');
+ui.chat.subscribe(s=>{state.textContent=s.facts.networkRestored?'Simulation : réseau rétabli':'Incident en cours'});
+document.getElementById('reset').addEventListener('click',()=>ui.restart());
+document.getElementById('technical').addEventListener('click',()=>ui.notify({type:'dhcp.lease-restored'}));
+</script></body></html>
