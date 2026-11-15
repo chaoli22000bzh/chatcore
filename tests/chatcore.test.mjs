@@ -74,3 +74,20 @@ assert.match(interfaceCode,/setTypingSpeed:value=>/,'Réglage de la vitesse en c
 assert.match(demo,/id="speed-test"/,'Sélecteur visible sur la page de laboratoire');
 assert.match(demo,/ui\.setTypingSpeed\(speedTest\.value\)/,'Changement de vitesse sans redémarrer');
 console.log('OK : cadence de frappe ralentie.');
+
+const pdfLab=fs.readFileSync('lab-pdf.html','utf8');
+const pdfScenario=fs.readFileSync('lab-pdf/scenario-chat.js','utf8');
+vm.runInContext(pdfScenario,context);
+const pdfChat=core.create(context.ChatCorePdfDemo);
+assert.equal(pdfChat.getState().facts.invoiceOpened,false,'La facture est initialement fermée');
+assert.equal(pdfChat.send('pdf-visible'),true,'Question posée avant ouverture');
+assert.match(pdfChat.getState().history.at(-1).text,/ne vois pas encore/);
+pdfChat.setFacts({invoiceOpened:true});
+assert.equal(pdfChat.send('pdf-visible'),true,'Question répétable après ouverture');
+assert.match(pdfChat.getState().history.at(-1).text,/Google Chrome/);
+assert.match(pdfLab,/win\.has\('file-open',e=>e\.file==='factureorange\.pdf'&&e\.app==='chrome'\)/,'Fait vérifié contre la trace du vrai Windows');
+assert.match(pdfLab,/addEventListener\('c2win:file-open'/,'Événement Windows réel écouté');
+assert.match(pdfLab,/new C2Windows11\(/,'Moteur Windows autonome instancié');
+assert.doesNotMatch(pdfLab,/Simuler : facture ouverte/,'Aucun bouton simulant une ouverture');
+for(const path of ['lab-pdf/windows-c2.js','lab-pdf/windows-c2.css','lab-pdf/windows-scenario.js','lab-pdf/windows-scenario.css'])assert.ok(fs.readFileSync(path,'utf8').includes('Copie de test autonome'),'Copie isolée '+path);
+console.log('OK : laboratoire PDF, faits conditionnels et événement Windows réellement observé.');
