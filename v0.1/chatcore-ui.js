@@ -57,8 +57,12 @@
        scrollEnd();
        return;
      }
-     // Départ bref, puis frappe progressive. Une lettre par étape ; environ 65 ms par lettre, plafonné pour les longues réponses.
-     const tickMs=Math.max(30,Math.min(65,5200/chars.length));
+     // Une lettre à la fois, vitesse configurable par scénario (lent 65, normal 35, rapide 15 ms).
+     const profiles={slow:65,normal:35,fast:15};
+     const setting=scenario.typingSpeed??'slow';
+     const tickMs=typeof setting==='number'&&Number.isFinite(setting)
+       ?Math.max(10,Math.min(200,setting))
+       :(profiles[setting]??profiles.slow);
      typing={body,message,chars,index:0,timer:null};
      function tick(){
        if(destroyed||!typing||typing.body!==body)return;
