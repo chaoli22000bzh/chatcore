@@ -4,7 +4,8 @@ Composant conversationnel commun et réutilisable pour les simulations pédagogi
 
 ## Première version expérimentale : 0.1.0
 
-**Page de test :** https://chaoli22000bzh.github.io/chatcore/
+**Laboratoire DHCP :** https://chaoli22000bzh.github.io/chatcore/  
+**Laboratoire PDF D3-02 :** https://chaoli22000bzh.github.io/chatcore/lab-pdf.html
 
 La version 0.1 propose des messages prédéfinis envoyés par l'élève (« Moi ») et des réponses déterministes d'un client virtuel. Les interlocuteurs sont distingués par deux couleurs, sur ordinateur comme sur smartphone. Dans C², l'interface suit automatiquement les cinq thèmes officiels (Clair, Sombre, TRON, Star Wars, Minitel 80).
 
@@ -15,7 +16,10 @@ La version 0.1 propose des messages prédéfinis envoyés par l'élève (« Moi 
 - `v0.1/chatcore.js` : moteur commun, sans dépendance et sans accès réseau.
 - `v0.1/chatcore-ui.js` : rendu des bulles et choix de messages.
 - `v0.1/chatcore.css` : styles isolés, responsive, mode sombre et compatibilité automatique avec les cinq thèmes C².
-- `demo/scenario-dhcp.js` : scénario de démonstration uniquement.
+- `demo/scenario-dhcp.js` : scénario DHCP de démonstration uniquement.
+- `lab-pdf.html` : laboratoire PDF D3-02 autonome, validé jusqu'à la clôture de l'intervention.
+- `lab-pdf/scenario-chat.js` : questions, réponses et faits liés à l'incident PDF.
+- `lab-pdf/windows-c2.js`, `lab-pdf/windows-c2.css`, `lab-pdf/windows-scenario.js`, `lab-pdf/windows-scenario.css` : copies isolées du simulateur Windows/PDF de C², destinées uniquement au laboratoire.
 - `index.html` : laboratoire GitHub Pages.
 - `tests/chatcore.test.mjs` : tests autonomes exécutés avec Node.
 - `.github/workflows/tests.yml` : exécution GitHub Actions.
@@ -36,15 +40,29 @@ ui.notify({type:'impression.test-ok'}); // seulement si le simulateur confirme c
 
 Le projet hôte fournit `{clientName, greeting, facts, messages, events}`. Chaque message contient au minimum `id`, `text`, `answer`. Des variantes `answers` peuvent être conditionnées par un `fact` du simulateur. `once:false` permet de reposer une question, par exemple pour vérifier une réparation.
 
-Le moteur expose `ChatCore.create(scenario)` et l'interface expose `ChatCoreUI.mount(element, scenario)`. Une instance offre `send(id)`, `available()`, `setFacts(patch)`, `notify(event)`, `getState()`, `restart()` et `subscribe(fn)`. Le montage visuel renvoie `{chat, notify, setFacts, restart, destroy}`.
+Le moteur expose `ChatCore.create(scenario)` et l'interface expose `ChatCoreUI.mount(element, scenario)`. Une instance offre `send(id)`, `available()`, `setFacts(patch)`, `notify(event)`, `getState()`, `restart()` et `subscribe(fn)`. Le montage visuel renvoie `{chat, notify, setFacts, setTypingSpeed, restart, destroy}`. Les choix de messages sont envoyés directement au clic, sans bouton Envoyer. Les réponses du client apparaissent lettre par lettre. La vitesse initiale est configurable dans le scénario par `typingSpeed: 'slow' | 'normal' | 'fast'` (65, 35 et 15 ms par lettre), ou par une valeur numérique en millisecondes. `ui.setTypingSpeed(...)` ajuste les prochaines réponses sans relancer la conversation. Les sélecteurs de vitesse des laboratoires ne sont pas imposés aux projets hôtes. L'animation est désactivée si le navigateur demande une réduction du mouvement.
 
-**Sécurité pédagogique :** un événement ne modifie les faits que si le scénario l'a prévu. Le simulateur reste seul responsable de la réalité technique. Un clic sur « Envoyer » n'a jamais pour effet de déclarer une réparation sans état correspondant.
+**Sécurité pédagogique :** un événement ne modifie les faits que si le scénario l'a prévu. Le simulateur reste seul responsable de la réalité technique. La sélection d'une phrase n'a jamais pour effet de déclarer une réparation sans état correspondant. **Le technicien réalise les manipulations ; le client constate le résultat.** Ne jamais attribuer au client les opérations effectuées par le technicien.
+
+## Recette laboratoire PDF : tests 6 à 10 validés le 15 novembre 2026
+
+Le professeur a validé les cinq étapes fonctionnelles dans **le laboratoire autonome** :
+
+1. **Test 6 :** le document `factureorange.pdf` est réellement ouvert dans Google Chrome et Sophie adapte sa réponse.
+2. **Test 7 :** l'aperçu avant impression dans Chrome génère une trace distincte ; Sophie n'en décrit les anomalies qu'après cet événement.
+3. **Test 8 :** l'ouverture du même fichier dans Adobe Acrobat Reader permet à Sophie de comparer les deux rendus, sans inventer une comparaison non réalisée.
+4. **Test 9 :** l'association `.pdf` est changée vers Reader ; la résolution n'est confirmée qu'après une **nouvelle ouverture postérieure** du fichier avec Reader. Les formulations attribuent les actions au technicien.
+5. **Test 10 :** le client refuse une clôture anticipée et confirme seulement après vérification, en conservant l'historique.
+
+**Architecture de la recette :** la page `lab-pdf.html` utilise des copies indépendantes des sources Windows/PDF de C². Elle écoute `c2win:file-open`, `c2win:print-preview` et `c2win:association-change`, puis contrôle les événements enregistrés dans `getTrace()` et l'association active. Les faits `invoiceOpened`, `printPreviewOpened`, `readerOpened`, `pdfAssociationChanged` et `repairVerified` alimentent les réponses conditionnelles. Les tests automatiques du dépôt ChatCore exécutés via GitHub Actions ont réussi. Le test manuel de l'ensemble des scénarios a été validé étape par étape par le professeur.
+
+**Portée :** cette validation ne couvre pas une intégration effective dans C², DiagTree, DiagCore ou R2D3. Elle ne constitue pas non plus une preuve de fonctionnement des cinq thèmes dans une page hôte, d'une persistance au rechargement, ni d'une recette exhaustive du navigateur.
 
 ## Limites et suites
 
-Cette version est un **prototype**, pas une intégration validée à C², R2D3 ou DiagCore. Le bouton « Simuler : réseau rétabli » sert à vérifier la persistance du chat pendant une intervention technique fictive. Il ne commande aucun simulateur de production.
+Cette version est un **prototype**, pas une intégration validée à C², R2D3 ou DiagCore. Le bouton « Simuler : réseau rétabli » du seul laboratoire DHCP représente un événement fictif. Le laboratoire PDF, à l'inverse, s'appuie sur les événements d'une copie autonome du simulateur Windows, sans raccorder le dépôt de production.
 
-L'intégration dans les TP D3-01/D3-02 ou dans R2D3 nécessitera un adaptateur aux événements techniques réels, testé séparément. Aucune modification des dépôts d'origine n'a été effectuée.
+L'intégration dans les TP D3-01/D3-02 ou dans R2D3 nécessitera un adaptateur aux événements et au cycle de vie de ces applications hôtes, testé séparément. Aucune modification des dépôts d'origine n'a été effectuée.
 
 ## Compatibilité avec les thèmes C²
 
