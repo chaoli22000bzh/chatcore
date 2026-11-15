@@ -156,3 +156,21 @@ const fixedReply=repairMessage.resolve({facts:{repairVerified:true,pdfAssociatio
 assert.doesNotMatch(fixedReply,/je viens de rouvrir|j'ai rouvert/,'Sophie ne s’attribue pas les manipulations');
 assert.match(fixedReply,/vous avez rouvert/,'Technicien auteur de la réouverture');
 console.log('OK : Sophie distingue son constat des actions du technicien.');
+
+const closingChat=core.create(context.ChatCorePdfDemo);
+const initialLength=closingChat.getState().history.length;
+assert.equal(closingChat.send('closing'),true,'Clôture demandée avant réparation');
+assert.match(closingChat.getState().history.at(-1).text,/ne peux pas confirmer/,'Sophie refuse une clôture prématurée');
+closingChat.setFacts({pdfAssociationChanged:true});
+assert.equal(closingChat.send('closing'),true,'Clôture après modification');
+assert.match(closingChat.getState().history.at(-1).text,/vérifiiez la facture/,'Modification seule insuffisante');
+closingChat.setFacts({repairVerified:true});
+assert.equal(closingChat.send('closing'),true,'Clôture après vérification');
+assert.match(closingChat.getState().history.at(-1).text,/Tout fonctionne/,'Sophie confirme uniquement après vérification');
+assert.equal(closingChat.getState().history.length,initialLength+6,'Historique intégral conservé');
+assert.ok(closingChat.available().some(m=>m.id==='closing'),'Question répétable');
+assert.doesNotMatch(closingChat.getState().history.at(-1).text,/j'ai modifié|j'ai rouvert/,'Sophie ne s'attribue pas les actions techniques');
+closingChat.restart();
+assert.equal(closingChat.getState().history.length,1,'Redémarrage de la conversation');
+assert.equal(closingChat.getState().facts.repairVerified,false,'Redémarrage des faits');
+console.log('OK : test 10 clôture refusée avant vérification et confirmée après, historique préservé.');
