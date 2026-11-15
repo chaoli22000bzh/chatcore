@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
-const context={};context.globalThis=context;vm.createContext(context);
+const context={};context.globalThis=context;context.window=context;vm.createContext(context);
 vm.runInContext(fs.readFileSync('v0.1/chatcore.js','utf8'),context);
 vm.runInContext(fs.readFileSync('demo/scenario-dhcp.js','utf8'),context);
 const core=context.ChatCore;
