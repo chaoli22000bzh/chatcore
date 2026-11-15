@@ -44,8 +44,8 @@ window.ChatCorePdfDemo={
       answer:"Non, je n'ai pas encore constaté de correction.",
       once:false,
       resolve:({facts})=>{
-        if(facts.repairVerified)return "Oui, je viens de rouvrir la facture normalement : elle s'affiche correctement dans Adobe Acrobat Reader. Le problème est résolu.";
-        if(facts.pdfAssociationChanged)return "Adobe Acrobat Reader est maintenant l'application par défaut, mais je préfère rouvrir la facture pour vérifier que le problème est bien résolu.";
+        if(facts.repairVerified)return "Oui, depuis que vous avez rouvert ma facture avec Adobe Acrobat Reader, elle s'affiche correctement. Merci, le problème est résolu.";
+        if(facts.pdfAssociationChanged)return "Vous avez changé l'application par défaut, mais nous n'avons pas encore vérifié le résultat. Pouvez-vous rouvrir ma facture ?";
         return "Non, nous n'avons pas encore vérifié que le problème est corrigé. Le fichier PDF s'ouvre toujours par défaut avec Chrome.";
       }
     },
