@@ -169,7 +169,7 @@ assert.equal(closingChat.send('closing'),true,'Clôture après vérification');
 assert.match(closingChat.getState().history.at(-1).text,/Tout fonctionne/,'Sophie confirme uniquement après vérification');
 assert.equal(closingChat.getState().history.length,initialLength+6,'Historique intégral conservé');
 assert.ok(closingChat.available().some(m=>m.id==='closing'),'Question répétable');
-assert.doesNotMatch(closingChat.getState().history.at(-1).text,/j'ai modifié|j'ai rouvert/,'Sophie ne s'attribue pas les actions techniques');
+assert.doesNotMatch(closingChat.getState().history.at(-1).text,/j'ai modifié|j'ai rouvert/,"Sophie ne s'attribue pas les actions techniques");
 closingChat.restart();
 assert.equal(closingChat.getState().history.length,1,'Redémarrage de la conversation');
 assert.equal(closingChat.getState().facts.repairVerified,false,'Redémarrage des faits');
