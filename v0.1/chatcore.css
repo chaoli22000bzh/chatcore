@@ -9,9 +9,8 @@
 .chatcore .cc-compose{border-top:1px solid var(--cc-border);padding:13px}.chatcore .cc-compose>strong{font-size:15px}
 .chatcore .cc-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
 .chatcore .cc-choice{min-height:52px;text-align:left;padding:10px 12px;border-radius:10px;border:1px solid var(--cc-border);background:var(--cc-choice);color:var(--cc-ink);font-size:14px}
-.chatcore .cc-choice[aria-pressed=true]{border:2px solid var(--cc-blue);background:var(--cc-me);color:var(--cc-me-ink);padding:9px 11px}
-.chatcore .cc-sendline{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:10px;border-top:1px solid var(--cc-border);padding-top:10px}
-.chatcore .cc-preview{font-size:13px;color:var(--cc-muted)}.chatcore .cc-send{border:0;border-radius:9px;background:var(--cc-accent,#1269af);color:var(--cc-accent-ink,#fff);font-weight:700;padding:10px 17px;min-height:44px}.chatcore .cc-send:disabled{opacity:.48;cursor:default}
+.chatcore .cc-choice:hover{border-color:var(--cc-blue)}.chatcore .cc-choice:active{background:var(--cc-me);color:var(--cc-me-ink)}
+.chatcore .cc-hint{font-size:13px;color:var(--cc-muted);margin:9px 0 0}
 @media(max-width:530px){.chatcore .cc-history{height:38vh;min-height:230px}.chatcore .cc-bubble{max-width:94%}.chatcore .cc-choices{grid-template-columns:1fr}.chatcore .cc-choice{min-height:44px}}
 @media(prefers-color-scheme:dark){.chatcore{--cc-panel:#1c2d42;--cc-ink:#edf5fd;--cc-muted:#b7cadb;--cc-border:#4e6680;--cc-client:#66471f;--cc-client-ink:#fff0d6;--cc-client-edge:#ba873e;--cc-me:#174d74;--cc-me-ink:#e9f6ff;--cc-me-edge:#519bcb;--cc-blue:#80c1fa;--cc-choice:#20364e}}
 
@@ -54,8 +53,7 @@ html[data-ctp-theme="80"] .chatcore{
  font-family:"Courier New",monospace;border-radius:2px;
 }
 html[data-ctp-theme="80"] .chatcore .cc-bubble,
-html[data-ctp-theme="80"] .chatcore .cc-choice,
-html[data-ctp-theme="80"] .chatcore .cc-send{border-radius:2px}
+html[data-ctp-theme="80"] .chatcore .cc-choice{border-radius:2px}
 html[data-ctp-theme="neon"] .chatcore .cc-client{box-shadow:inset 3px 0 #ffab4540}
 html[data-ctp-theme="neon"] .chatcore .cc-me{box-shadow:inset -3px 0 #00dff040}
 html[data-ctp-theme="space"] .chatcore .cc-head{border-bottom-color:#f4c430}
