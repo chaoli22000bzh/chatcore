@@ -55,3 +55,9 @@ Les couleurs utilisent les variables C² existantes (`--ctp-panel`, `--ctp-text`
 **Aucune préférence de thème n'est enregistrée par ChatCore.** Aucun sélecteur supplémentaire ne doit apparaître dans C². Le sélecteur visible sur la page de test ChatCore sert uniquement à vérifier les cinq rendus sans C².
 
 L’intégration réelle de ChatCore aux TP C² nécessitera encore une recette visuelle sur les cinq thèmes. Les CSS de C² n'ont pas été modifiées.
+
+## Référence d'intégration C² et R2D3
+
+Les choix d'architecture communs, la séparation des responsabilités, le statut des TP D3-01/D3-02/D3-03 et la liste des recettes restantes sont maintenus dans [C2/docs/INTEGRATION_CHATCORE.md](https://github.com/chaoli22000bzh/C2/blob/main/docs/INTEGRATION_CHATCORE.md).
+
+Ce README reste la **documentation technique propre à ChatCore** (API, fichiers, démonstration, tests). L'intégration dans les projets hôtes ne doit pas être considérée comme validée avant leurs recettes. Après les tests, mettre à jour les documents existants plutôt que créer des fichiers de suivi concurrents.
