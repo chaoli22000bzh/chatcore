@@ -107,3 +107,24 @@ assert.ok(pdfLab.includes("win.has('print-preview',e=>e.file==='factureorange.pd
 previewChat.restart();
 assert.equal(previewChat.getState().facts.printPreviewOpened,false,'Redémarrage réinitialise aperçu');
 console.log('OK : test 7 aperçu conditionnel, distinct de l’ouverture PDF, vérification des traces et réinitialisation.');
+
+const readerChat=core.create(context.ChatCorePdfDemo);
+assert.equal(readerChat.getState().facts.readerOpened,false,'Reader non utilisé au démarrage');
+assert.equal(readerChat.send('reader-check'),true,'Question avant ouverture de Reader');
+assert.match(readerChat.getState().history.at(-1).text,/pas encore ouvert/);
+readerChat.setFacts({invoiceOpened:true});
+assert.equal(readerChat.send('reader-check'),true,'Chrome seul ne valide pas Reader');
+assert.match(readerChat.getState().history.at(-1).text,/pas encore ouvert/);
+readerChat.setFacts({readerOpened:true});
+assert.equal(readerChat.send('reader-check'),true,'Question répétable après Reader');
+assert.match(readerChat.getState().history.at(-1).text,/Chrome, mais elle s'affiche correctement dans Adobe Acrobat Reader/);
+const readerFirst=core.create(context.ChatCorePdfDemo);
+readerFirst.setFacts({readerOpened:true});
+assert.equal(readerFirst.send('reader-check'),true);
+assert.match(readerFirst.getState().history.at(-1).text,/pas encore comparé avec Chrome/,'Pas de comparaison imaginaire sans Chrome');
+assert.ok(pdfLab.includes("event.detail.app==='reader'"),'Événement Reader filtré');
+assert.ok(pdfLab.includes("win.has('file-open',e=>e.file==='factureorange.pdf'&&e.app==='reader')"),'Trace Reader vérifiée');
+assert.ok(pdfLab.includes("event.detail.file!=='factureorange.pdf'"),'Autres fichiers ignorés');
+readerChat.restart();
+assert.equal(readerChat.getState().facts.readerOpened,false,'Réinitialisation de la trace Reader');
+console.log('OK : test 8 lecteur PDF, comparaison conditionnelle et absence de fausses observations.');
