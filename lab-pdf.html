@@ -21,7 +21,7 @@ footer{margin-top:14px;font-size:13px;color:#52667a}
 </style>
 </head>
 <body><main>
-<h1>ChatCore : laboratoire PDF <small>Tests 1 et 2</small></h1>
+<h1>ChatCore : laboratoire PDF <small>Tests 1 à 3</small></h1>
 <p class="intro">Test autonome hors C². Poste Windows 11 issu d'une copie du simulateur D3-02, relié à ChatCore par ses événements techniques.</p>
 <div class="toolbar">
 <label for="speed">Vitesse de Sophie :</label><select id="speed"><option value="slow">Lente</option><option value="normal" selected>Normale</option><option value="fast">Rapide</option></select>
@@ -32,12 +32,12 @@ footer{margin-top:14px;font-size:13px;color:#52667a}
 <section aria-label="Windows 11 simulé">
 <h2>Poste distant : PC-SMARTIN</h2>
 <div id="pdf-windows"></div>
-<p class="lab-tip"><strong>Action :</strong> ouvre « Documents », puis <code>factureorange.pdf</code>. Dans Chrome, clique sur « Aperçu avant impression ». Les réponses de Sophie dépendent des traces réellement produites par Windows.</p>
+<p class="lab-tip"><strong>Action :</strong> ouvre « Documents », puis <code>factureorange.pdf</code>. Dans Chrome, clique sur « Aperçu avant impression ». Pour la comparaison, ouvre Adobe Acrobat Reader depuis le Bureau, puis ouvre le même fichier avec le bouton « Ouvrir ». Les réponses de Sophie dépendent des traces réellement produites par Windows.</p>
 </section>
 <section aria-label="Dialogue client">
 <h2>Conversation avec Sophie</h2>
 <div id="pdf-chat"></div>
-<p class="lab-tip">Interroge Sophie <strong>avant et après</strong> l'ouverture de la facture, puis <strong>avant et après</strong> l'affichage de l'aperçu.</p>
+<p class="lab-tip">Interroge Sophie <strong>avant et après</strong> l'ouverture de la facture, puis <strong>avant et après</strong> l'affichage de l'aperçu. Teste également la question sur Reader, avant et après avoir ouvert le même PDF dans cette application.</p>
 </section>
 </div>
 <footer><a href="./">Retour au laboratoire DHCP</a>. Cette page n'écrit rien dans C², R2D3 ou DiagTree.</footer>
@@ -56,9 +56,14 @@ const speed=document.getElementById('speed');
 speed.addEventListener('change',()=>ui.setTypingSpeed(speed.value));
 document.getElementById('pdf-windows').addEventListener('c2win:file-open',event=>{
   // Ne croire que la trace du vrai simulateur Windows ; ignorer tout autre fichier.
-  if(win.has('file-open',e=>e.file==='factureorange.pdf'&&e.app==='chrome')){
+  if(event.detail.file!=='factureorange.pdf')return;
+  if(event.detail.app==='chrome'&&win.has('file-open',e=>e.file==='factureorange.pdf'&&e.app==='chrome')){
     ui.setFacts({invoiceOpened:true});
     status.textContent='Facture ouverte dans Google Chrome';
+  }
+  if(event.detail.app==='reader'&&win.has('file-open',e=>e.file==='factureorange.pdf'&&e.app==='reader')){
+    ui.setFacts({readerOpened:true});
+    status.textContent='Facture ouverte dans Adobe Acrobat Reader';
   }
 });
 document.getElementById('pdf-windows').addEventListener('c2win:print-preview',()=>{
