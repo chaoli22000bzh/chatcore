@@ -50,6 +50,17 @@ window.ChatCorePdfDemo={
       }
     },
     {
+      id:'closing',
+      text:"Sophie, j'ai terminé mon intervention. Pouvez-vous me confirmer que tout fonctionne correctement ?",
+      answer:"Je préfère attendre la vérification avant de confirmer la fin du dépannage.",
+      once:false,
+      resolve:({facts})=>{
+        if(facts.repairVerified)return "Oui, je vous confirme que ma facture s'ouvre correctement maintenant. Tout fonctionne, merci pour votre intervention. Bonne journée !";
+        if(facts.pdfAssociationChanged)return "Merci, mais je préfère que vous vérifiiez la facture après votre modification avant de terminer l'intervention.";
+        return "Je rencontre encore le problème avec ma facture. Je ne peux pas confirmer la fin de l'intervention pour le moment.";
+      }
+    },
+    {
       id:'filename',
       text:'Quel est le nom du fichier qui pose problème ?',
       answer:'Le fichier s’appelle factureorange.pdf.'
