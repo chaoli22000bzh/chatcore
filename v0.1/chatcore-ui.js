@@ -14,6 +14,7 @@
    const historyHost=root.querySelector('.cc-history'),choiceHost=root.querySelector('.cc-choices'),hint=root.querySelector('.cc-hint');
    const reducedMotion=!!(global.matchMedia&&global.matchMedia('(prefers-reduced-motion: reduce)').matches);
    let rendered=0,typing=null,destroyed=false;
+   let typingSpeed=scenario.typingSpeed??'slow';
    function scrollEnd(){historyHost.scrollTop=historyHost.scrollHeight;}
    function cancelTyping(){
      if(typing){clearTimeout(typing.timer);typing=null;}
@@ -59,7 +60,7 @@
      }
      // Une lettre à la fois, vitesse configurable par scénario (lent 65, normal 35, rapide 15 ms).
      const profiles={slow:65,normal:35,fast:15};
-     const setting=scenario.typingSpeed??'slow';
+     const setting=typingSpeed;
      const tickMs=typeof setting==='number'&&Number.isFinite(setting)
        ?Math.max(10,Math.min(200,setting))
        :(profiles[setting]??profiles.slow);
@@ -99,6 +100,7 @@
      restart:()=>{cancelTyping();chat.restart();},
      notify:event=>chat.notify(event),
      setFacts:patch=>chat.setFacts(patch),
+     setTypingSpeed:value=>{if(value!=='slow'&&value!=='normal'&&value!=='fast'&&!(typeof value==='number'&&Number.isFinite(value)))throw Error('ChatCore UI : vitesse invalide');typingSpeed=value;return typingSpeed;},
      destroy:()=>{destroyed=true;cancelTyping();unsubscribe();root.replaceChildren();root.classList.remove('chatcore');}
    });
  }
