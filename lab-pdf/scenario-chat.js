@@ -3,7 +3,7 @@ window.ChatCorePdfDemo={
   clientName:'Sophie Martin',
   typingSpeed:'normal',
   greeting:"Bonjour, j'ai un problème avec ma facture Orange : quand je l'ouvre, certains caractères ne s'affichent pas correctement. Pouvez-vous regarder ?",
-  facts:{invoiceOpened:false,printPreviewOpened:false},
+  facts:{invoiceOpened:false,printPreviewOpened:false,readerOpened:false},
   messages:[
     {
       id:'pdf-visible',
@@ -26,6 +26,17 @@ window.ChatCorePdfDemo={
         true:"Oui, je vois l'aperçu avant impression dans Chrome. Les caractères sont encore plus déformés que sur le document à l'écran."
       },
       once:false
+    },
+    {
+      id:'reader-check',
+      text:"Sophie, avez-vous pu comparer l'affichage de votre facture dans Adobe Acrobat Reader ?",
+      answer:"Non, je n'ai pas encore ouvert la facture avec Adobe Acrobat Reader.",
+      once:false,
+      resolve:({facts})=>{
+        if(!facts.readerOpened)return "Non, je n'ai pas encore ouvert la facture avec Adobe Acrobat Reader.";
+        if(!facts.invoiceOpened)return "Oui, je viens de regarder dans Adobe Acrobat Reader : la facture s'affiche correctement. Je n'ai pas encore comparé avec Chrome.";
+        return "Oui, j'ai comparé : la facture présente des caractères anormaux dans Chrome, mais elle s'affiche correctement dans Adobe Acrobat Reader.";
+      }
     },
     {
       id:'filename',
