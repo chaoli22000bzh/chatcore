@@ -21,7 +21,7 @@ footer{margin-top:14px;font-size:13px;color:#52667a}
 </style>
 </head>
 <body><main>
-<h1>ChatCore : laboratoire PDF <small>Tests 1 à 3</small></h1>
+<h1>ChatCore : laboratoire PDF <small>Tests 1 à 4</small></h1>
 <p class="intro">Test autonome hors C². Poste Windows 11 issu d'une copie du simulateur D3-02, relié à ChatCore par ses événements techniques.</p>
 <div class="toolbar">
 <label for="speed">Vitesse de Sophie :</label><select id="speed"><option value="slow">Lente</option><option value="normal" selected>Normale</option><option value="fast">Rapide</option></select>
@@ -32,12 +32,12 @@ footer{margin-top:14px;font-size:13px;color:#52667a}
 <section aria-label="Windows 11 simulé">
 <h2>Poste distant : PC-SMARTIN</h2>
 <div id="pdf-windows"></div>
-<p class="lab-tip"><strong>Action :</strong> ouvre « Documents », puis <code>factureorange.pdf</code>. Dans Chrome, clique sur « Aperçu avant impression ». Pour la comparaison, ouvre Adobe Acrobat Reader depuis le Bureau, puis ouvre le même fichier avec le bouton « Ouvrir ». Les réponses de Sophie dépendent des traces réellement produites par Windows.</p>
+<p class="lab-tip"><strong>Action :</strong> ouvre « Documents », puis <code>factureorange.pdf</code>. Dans Chrome, clique sur « Aperçu avant impression ». Pour la comparaison, ouvre Adobe Acrobat Reader depuis le Bureau, puis ouvre le même fichier avec le bouton « Ouvrir ». Pour corriger l'incident : ouvre les Paramètres Windows, « Applications par défaut », choisis « .pdf » puis Adobe Acrobat Reader. Ouvre ensuite à nouveau la facture depuis Documents pour vérifier.</p>
 </section>
 <section aria-label="Dialogue client">
 <h2>Conversation avec Sophie</h2>
 <div id="pdf-chat"></div>
-<p class="lab-tip">Interroge Sophie <strong>avant et après</strong> l'ouverture de la facture, puis <strong>avant et après</strong> l'affichage de l'aperçu. Teste également la question sur Reader, avant et après avoir ouvert le même PDF dans cette application.</p>
+<p class="lab-tip">Interroge Sophie <strong>avant et après</strong> l'ouverture de la facture, puis <strong>avant et après</strong> l'affichage de l'aperçu. Teste également la question sur Reader, puis la question de résolution avant correction, après changement d'application par défaut et enfin après réouverture du PDF.</p>
 </section>
 </div>
 <footer><a href="./">Retour au laboratoire DHCP</a>. Cette page n'écrit rien dans C², R2D3 ou DiagTree.</footer>
@@ -64,6 +64,7 @@ document.getElementById('pdf-windows').addEventListener('c2win:file-open',event=
   if(event.detail.app==='reader'&&win.has('file-open',e=>e.file==='factureorange.pdf'&&e.app==='reader')){
     ui.setFacts({readerOpened:true});
     status.textContent='Facture ouverte dans Adobe Acrobat Reader';
+    syncRepairState();
   }
 });
 document.getElementById('pdf-windows').addEventListener('c2win:print-preview',()=>{
@@ -72,6 +73,24 @@ document.getElementById('pdf-windows').addEventListener('c2win:print-preview',()
     ui.setFacts({printPreviewOpened:true});
     status.textContent='Aperçu de facture affiché dans Google Chrome';
   }
+});
+// Vérification exige un changement d'association ET une ouverture postérieure du PDF.
+function syncRepairState(){
+  const trace=win.getTrace();
+  let changedAt=-1;
+  for(let i=0;i<trace.length;i++){
+    if(trace[i].type==='association-change'&&trace[i].ext==='.pdf')
+      changedAt=i;
+  }
+  const associated=win.state.association['.pdf']==='reader';
+  const changed=associated&&changedAt>=0&&trace[changedAt].app==='reader';
+  const verified=changed&&trace.slice(changedAt+1).some(e=>e.type==='file-open'&&e.file==='factureorange.pdf'&&e.app==='reader');
+  ui.setFacts({pdfAssociationChanged:changed,repairVerified:verified});
+  if(verified)status.textContent='Correction vérifiée : la facture s’ouvre dans Reader';
+  else if(changed)status.textContent='Reader défini par défaut : vérification nécessaire';
+}
+document.getElementById('pdf-windows').addEventListener('c2win:association-change',event=>{
+  if(event.detail.ext==='.pdf')syncRepairState();
 });
 document.getElementById('restart').addEventListener('click',()=>{
   // Nouveau poste et nouvelle conversation ; les autres moteurs et documents restent inchangés.
