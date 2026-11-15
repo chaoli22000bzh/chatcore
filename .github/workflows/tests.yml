@@ -1,0 +1,25 @@
+name: ChatCore - tests
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'v0.1/**'
+      - 'demo/**'
+      - 'index.html'
+      - 'tests/**'
+      - '.github/workflows/tests.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Vérifier la syntaxe du moteur
+        run: node --check v0.1/chatcore.js && node --check v0.1/chatcore-ui.js && node --check demo/scenario-dhcp.js
+      - name: Exécuter les tests de conversation
+        run: node tests/chatcore.test.mjs
