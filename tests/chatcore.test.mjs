@@ -68,5 +68,9 @@ assert.match(interfaceCode,/b\.disabled=!!typing/,'Empêche les nouveaux envois 
 console.log('OK : écriture progressive et cycle de vie des réponses.');
 
 assert.match(interfaceCode,/item\.index\+1/,'Une lettre ajoutée à chaque étape');
-assert.match(interfaceCode,/Math\.max\(30,Math\.min\(65,5200\/chars\.length\)\)/,'Cadence ralentie et durée des longues réponses maîtrisée');
+assert.match(interfaceCode,/profiles=\{slow:65,normal:35,fast:15\}/,'Trois vitesses définies');
+assert.match(interfaceCode,/let typingSpeed=scenario\.typingSpeed\?\?'slow'/,'Valeur initiale du scénario');
+assert.match(interfaceCode,/setTypingSpeed:value=>/,'Réglage de la vitesse en cours de session');
+assert.match(demo,/id="speed-test"/,'Sélecteur visible sur la page de laboratoire');
+assert.match(demo,/ui\.setTypingSpeed\(speedTest\.value\)/,'Changement de vitesse sans redémarrer');
 console.log('OK : cadence de frappe ralentie.');
