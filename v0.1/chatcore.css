@@ -1,4 +1,4 @@
-/* ChatCore 0.1 : scoped, responsive, thème clair/sombre */
+/* ChatCore 0.1 : styles isolés, thèmes C² suivis via html[data-ctp-theme]. */
 .chatcore{--cc-panel:#fff;--cc-ink:#1d3044;--cc-muted:#546c83;--cc-border:#cbd6e2;--cc-client:#ffe2b7;--cc-client-ink:#51310a;--cc-client-edge:#d28b30;--cc-me:#c4e5ff;--cc-me-ink:#103d63;--cc-me-edge:#3e93d4;--cc-blue:#1269af;--cc-choice:#fff;display:flex;flex-direction:column;color:var(--cc-ink);background:var(--cc-panel);border:1px solid var(--cc-border);border-radius:14px;overflow:hidden;font:16px/1.45 Arial,sans-serif;min-width:0}
 .chatcore *{box-sizing:border-box}.chatcore button{cursor:pointer;font:inherit}.chatcore button:focus-visible{outline:3px solid orange;outline-offset:2px}
 .chatcore .cc-head{display:flex;gap:12px;align-items:center;border-bottom:1px solid var(--cc-border);padding:12px 15px}.chatcore .cc-head small{display:block;color:var(--cc-muted);font-size:12px}.chatcore .cc-avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#2873a8;color:white;font-size:14px;font-weight:bold}
@@ -11,6 +11,54 @@
 .chatcore .cc-choice{min-height:52px;text-align:left;padding:10px 12px;border-radius:10px;border:1px solid var(--cc-border);background:var(--cc-choice);color:var(--cc-ink);font-size:14px}
 .chatcore .cc-choice[aria-pressed=true]{border:2px solid var(--cc-blue);background:var(--cc-me);color:var(--cc-me-ink);padding:9px 11px}
 .chatcore .cc-sendline{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:10px;border-top:1px solid var(--cc-border);padding-top:10px}
-.chatcore .cc-preview{font-size:13px;color:var(--cc-muted)}.chatcore .cc-send{border:0;border-radius:9px;background:#1269af;color:white;font-weight:700;padding:10px 17px;min-height:44px}.chatcore .cc-send:disabled{opacity:.48;cursor:default}
+.chatcore .cc-preview{font-size:13px;color:var(--cc-muted)}.chatcore .cc-send{border:0;border-radius:9px;background:var(--cc-accent,#1269af);color:var(--cc-accent-ink,#fff);font-weight:700;padding:10px 17px;min-height:44px}.chatcore .cc-send:disabled{opacity:.48;cursor:default}
 @media(max-width:530px){.chatcore .cc-history{height:38vh;min-height:230px}.chatcore .cc-bubble{max-width:94%}.chatcore .cc-choices{grid-template-columns:1fr}.chatcore .cc-choice{min-height:44px}}
 @media(prefers-color-scheme:dark){.chatcore{--cc-panel:#1c2d42;--cc-ink:#edf5fd;--cc-muted:#b7cadb;--cc-border:#4e6680;--cc-client:#66471f;--cc-client-ink:#fff0d6;--cc-client-edge:#ba873e;--cc-me:#174d74;--cc-me-ink:#e9f6ff;--cc-me-edge:#519bcb;--cc-blue:#80c1fa;--cc-choice:#20364e}}
+
+/* Thèmes officiels C². Variables uniquement sur ChatCore, sans modifier le thème hôte.
+   Sélecteur plus spécifique que les règles du système sombre navigateur : priorité au choix C². */
+html[data-ctp-theme="pure"] .chatcore{
+ --cc-panel:var(--ctp-panel,#fff);--cc-ink:var(--ctp-text,#182230);--cc-muted:var(--ctp-muted,#546c83);
+ --cc-border:var(--ctp-line,#e7eaf0);--cc-choice:var(--ctp-choice-bg,#fff);
+ --cc-blue:var(--ctp-accent,#1769e0);--cc-accent:var(--ctp-accent,#1769e0);--cc-accent-ink:var(--ctp-accent-text,#fff);
+ --cc-client:#ffe2b7;--cc-client-ink:#51310a;--cc-client-edge:#d28b30;
+ --cc-me:#c4e5ff;--cc-me-ink:#103d63;--cc-me-edge:#3e93d4;
+}
+html[data-ctp-theme="dark"] .chatcore{
+ --cc-panel:var(--ctp-panel,#202633);--cc-ink:var(--ctp-text,#e8edf5);--cc-muted:var(--ctp-muted,#aab5c5);
+ --cc-border:var(--ctp-line,#394252);--cc-choice:var(--ctp-choice-bg,#171c25);
+ --cc-blue:var(--ctp-accent,#78a8ff);--cc-accent:var(--ctp-accent,#78a8ff);--cc-accent-ink:var(--ctp-accent-text,#101722);
+ --cc-client:#62421f;--cc-client-ink:#fff1db;--cc-client-edge:#d6a256;
+ --cc-me:#164e74;--cc-me-ink:#ecf8ff;--cc-me-edge:#65afdf;
+}
+html[data-ctp-theme="neon"] .chatcore{
+ --cc-panel:var(--ctp-panel,#041016);--cc-ink:var(--ctp-text,#dffcff);--cc-muted:#a4d7e1;
+ --cc-border:var(--ctp-line,#00a9c4);--cc-choice:var(--ctp-choice-bg,#06131a);
+ --cc-blue:var(--ctp-accent,#00e5ff);--cc-accent:var(--ctp-accent,#00e5ff);--cc-accent-ink:var(--ctp-accent-text,#001018);
+ --cc-client:#302818;--cc-client-ink:#fff1d5;--cc-client-edge:#ffab45;
+ --cc-me:#093846;--cc-me-ink:#d9fbff;--cc-me-edge:#00dff0;
+}
+html[data-ctp-theme="space"] .chatcore{
+ --cc-panel:var(--ctp-panel,#080808);--cc-ink:var(--ctp-text,#f5f5f2);--cc-muted:#c0c0ba;
+ --cc-border:var(--ctp-line,#666);--cc-choice:var(--ctp-choice-bg,#0a0b0d);
+ --cc-blue:var(--ctp-accent,#f4c430);--cc-accent:var(--ctp-accent,#f4c430);--cc-accent-ink:var(--ctp-accent-text,#080808);
+ --cc-client:#302a1b;--cc-client-ink:#fff3cf;--cc-client-edge:#f4c430;
+ --cc-me:#171e32;--cc-me-ink:#edf0ff;--cc-me-edge:#90aaff;
+}
+html[data-ctp-theme="80"] .chatcore{
+ --cc-panel:var(--ctp-panel,#002824);--cc-ink:var(--ctp-text,#6dff9c);--cc-muted:#8ce4a7;
+ --cc-border:var(--ctp-line,#36f58a);--cc-choice:var(--ctp-choice-bg,#001b19);
+ --cc-blue:var(--ctp-accent,#36f58a);--cc-accent:var(--ctp-accent,#36f58a);--cc-accent-ink:var(--ctp-accent-text,#001b19);
+ --cc-client:#123c2a;--cc-client-ink:#c6ffdb;--cc-client-edge:#a0ffc1;
+ --cc-me:#003329;--cc-me-ink:#acffd0;--cc-me-edge:#36f58a;
+ font-family:"Courier New",monospace;border-radius:2px;
+}
+html[data-ctp-theme="80"] .chatcore .cc-bubble,
+html[data-ctp-theme="80"] .chatcore .cc-choice,
+html[data-ctp-theme="80"] .chatcore .cc-send{border-radius:2px}
+html[data-ctp-theme="neon"] .chatcore .cc-client{box-shadow:inset 3px 0 #ffab4540}
+html[data-ctp-theme="neon"] .chatcore .cc-me{box-shadow:inset -3px 0 #00dff040}
+html[data-ctp-theme="space"] .chatcore .cc-head{border-bottom-color:#f4c430}
+@media(prefers-color-scheme:dark){
+ html[data-ctp-theme="pure"] .chatcore{--cc-panel:var(--ctp-panel,#fff);--cc-ink:var(--ctp-text,#182230);--cc-muted:var(--ctp-muted,#546c83);--cc-border:var(--ctp-line,#e7eaf0);--cc-choice:var(--ctp-choice-bg,#fff);--cc-client:#ffe2b7;--cc-client-ink:#51310a;--cc-client-edge:#d28b30;--cc-me:#c4e5ff;--cc-me-ink:#103d63;--cc-me-edge:#3e93d4}
+}
