@@ -3,19 +3,38 @@
 <title>ChatCore - Test du dialogue</title>
 <link rel="stylesheet" href="./v0.1/chatcore.css">
 <style>
-:root{color-scheme:light dark}*{box-sizing:border-box}body{margin:0;background:#f1f5fa;color:#213950;font:16px/1.5 Arial,sans-serif}main{max-width:800px;padding:14px;margin:auto}h1{font-size:clamp(22px,4vw,30px);margin:0}.intro{margin:6px 0 13px;color:#53677e}.toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:12px 0}.toolbar button{border:1px solid #91a9bf;background:#fff;color:#183b59;padding:10px 13px;min-height:44px;border-radius:9px;cursor:pointer}.status{font-size:13px;color:#4c657b}.info{font-size:13px;color:#53677e;line-height:1.5}button:focus-visible{outline:3px solid orange;outline-offset:2px}
-@media(prefers-color-scheme:dark){body{background:#101b29;color:#edf5fd}.intro,.status,.info{color:#b7cadb}.toolbar button{background:#20364e;color:#edf5fd;border-color:#4e6680}}
+:root{color-scheme:light dark}*{box-sizing:border-box}body{margin:0;background:#f1f5fa;color:#213950;font:16px/1.5 Arial,sans-serif}main{max-width:800px;padding:14px;margin:auto}h1{font-size:clamp(22px,4vw,30px);margin:0}.intro{margin:6px 0 13px;color:#53677e}.toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:12px 0}.toolbar select{min-height:44px;padding:8px 10px;border:1px solid #91a9bf;border-radius:9px;background:#fff;color:#183b59}.toolbar button{border:1px solid #91a9bf;background:#fff;color:#183b59;padding:10px 13px;min-height:44px;border-radius:9px;cursor:pointer}.status{font-size:13px;color:#4c657b}.info{font-size:13px;color:#53677e;line-height:1.5}button:focus-visible{outline:3px solid orange;outline-offset:2px}
+@media(prefers-color-scheme:dark){body{background:#101b29;color:#edf5fd}.intro,.status,.info{color:#b7cadb}.toolbar button,.toolbar select{background:#20364e;color:#edf5fd;border-color:#4e6680}}
+/* Les couleurs du décor sont propres à la démo; ChatCore utilise les variables et thèmes C² officiels. */
+html[data-ctp-theme="pure"] body{background:#f1f5fa;color:#213950}
+html[data-ctp-theme="dark"] body{background:#151922;color:#e8edf5}
+html[data-ctp-theme="neon"] body{background:#010609;color:#dffcff}
+html[data-ctp-theme="space"] body{background:#020203;color:#f5f5f2}
+html[data-ctp-theme="80"] body{background:#001b19;color:#6dff9c;font-family:"Courier New",monospace}
+html[data-ctp-theme="80"] .toolbar button,html[data-ctp-theme="80"] .toolbar select{border-radius:2px}
+html[data-ctp-theme="neon"] .toolbar button,html[data-ctp-theme="neon"] .toolbar select{background:#06131a;color:#dffcff;border-color:#00cce8}
+html[data-ctp-theme="space"] .toolbar button,html[data-ctp-theme="space"] .toolbar select{background:#111;color:#ffe27b;border-color:#f4c430}
+html[data-ctp-theme="80"] .toolbar button,html[data-ctp-theme="80"] .toolbar select{background:#002824;color:#6dff9c;border-color:#36f58a}
+html[data-ctp-theme="pure"] .intro,html[data-ctp-theme="pure"] .status,html[data-ctp-theme="pure"] .info{color:#53677e}
+html[data-ctp-theme="dark"] .intro,html[data-ctp-theme="dark"] .status,html[data-ctp-theme="dark"] .info{color:#b7cadb}
+html[data-ctp-theme="neon"] .intro,html[data-ctp-theme="neon"] .status,html[data-ctp-theme="neon"] .info{color:#a4d7e1}
+html[data-ctp-theme="space"] .intro,html[data-ctp-theme="space"] .status,html[data-ctp-theme="space"] .info{color:#c0c0ba}
+html[data-ctp-theme="80"] .intro,html[data-ctp-theme="80"] .status,html[data-ctp-theme="80"] .info{color:#8ce4a7}
 </style></head>
 <body><main>
 <h1>ChatCore <small>V0.1</small></h1><p class="intro">Conversation client-technicien, sans IA, sans installation.</p>
-<div class="toolbar"><button id="reset" type="button">↻ Recommencer</button><button id="technical" type="button">Simuler : réseau rétabli</button><span id="state" class="status">Incident en cours</span></div>
+<div class="toolbar"><label for="theme-test">Thème C² :</label><select id="theme-test" aria-label="Prévisualisation du thème C²"><option value="pure">Clair</option><option value="dark">Sombre</option><option value="neon">TRON</option><option value="space">Star Wars</option><option value="80">Minitel 80</option></select><button id="reset" type="button">↻ Recommencer</button><button id="technical" type="button">Simuler : réseau rétabli</button><span id="state" class="status">Incident en cours</span></div>
 <div id="chat" aria-label="Conversation avec Sophie"></div>
+<p class="info">Le sélecteur de thème sert uniquement à cette page de test. Dans C², ChatCore suit automatiquement le thème déjà sélectionné, même si celui-ci change pendant le dépannage.</p>
 <p class="info">Le bouton « Simuler : réseau rétabli » représente un événement reçu de R2D3. Il ne répare aucun vrai réseau : il modifie uniquement l'état du scénario de démonstration. Le chat reste actif. Pose ensuite la question « Sophie, est-ce que les ordinateurs accèdent maintenant au réseau ? » pour constater la différence.</p>
 <p class="info">Dépôt indépendant : <a href="https://github.com/chaoli22000bzh/chatcore">GitHub ChatCore</a>. Aucun changement dans C², R2D3, DiagCore ou DiagTree.</p>
 </main>
 <script src="./v0.1/chatcore.js"></script><script src="./v0.1/chatcore-ui.js"></script><script src="./demo/scenario-dhcp.js"></script>
 <script>
 const ui=ChatCoreUI.mount('#chat',ChatCoreDemo);
+const themeTest=document.getElementById('theme-test');
+document.documentElement.dataset.ctpTheme=themeTest.value;
+themeTest.addEventListener('change',()=>{document.documentElement.dataset.ctpTheme=themeTest.value;});
 const state=document.getElementById('state');
 ui.chat.subscribe(s=>{state.textContent=s.facts.networkRestored?'Simulation : réseau rétabli':'Incident en cours'});
 document.getElementById('reset').addEventListener('click',()=>ui.restart());
