@@ -1,6 +1,7 @@
 /* Scénario pédagogique de démonstration. Il appartient à l'application, pas à ChatCore. */
 window.ChatCoreDemo={
  clientName:'Sophie Martin',
+ typingSpeed:'normal', // Essai enseignant : 35 ms par lettre.
  greeting:"Bonjour,\nPlusieurs ordinateurs de notre site n'arrivent plus à accéder au réseau. Pouvez-vous regarder ?\nMerci, Sophie.",
  facts:{networkRestored:false},
  events:{'dhcp.lease-restored':{networkRestored:true}},
