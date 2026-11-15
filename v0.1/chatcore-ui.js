@@ -57,13 +57,13 @@
        scrollEnd();
        return;
      }
-     // Départ bref, puis frappe progressive. Durée plafonnée pour les longs textes.
-     const tickMs=Math.max(13,Math.min(34,1700/chars.length));
+     // Départ bref, puis frappe progressive. Une lettre par étape ; environ 65 ms par lettre, plafonné pour les longues réponses.
+     const tickMs=Math.max(30,Math.min(65,5200/chars.length));
      typing={body,message,chars,index:0,timer:null};
      function tick(){
        if(destroyed||!typing||typing.body!==body)return;
        const item=typing;
-       item.index=Math.min(chars.length,item.index+2);
+       item.index=Math.min(chars.length,item.index+1);
        body.textContent=chars.slice(0,item.index).join('');
        scrollEnd();
        if(item.index>=chars.length){finishTyping();return;}
