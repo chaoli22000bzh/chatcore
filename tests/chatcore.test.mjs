@@ -59,3 +59,10 @@ assert.match(interfaceCode,/class="cc-choices"/,'Les messages prédéfinis reste
 assert.match(interfaceCode,/cc-history/,'L’historique de conversation est conservé');
 assert.match(css,/cc-hint/,'L’interface indique le fonctionnement en un clic');
 console.log('OK : interface envoi direct sans bouton Envoyer.');
+
+assert.match(interfaceCode,/Array\.from\(message\.text\)/,'Animation progressive des caractères de la réponse');
+assert.match(interfaceCode,/setTimeout\(tick,280\)/,'Court délai avant écriture');
+assert.match(interfaceCode,/prefers-reduced-motion/,'Respect des préférences de mouvement réduit');
+assert.match(interfaceCode,/cancelTyping\(\);chat\.restart\(\)/,'Redémarrage annule l’animation');
+assert.match(interfaceCode,/b\.disabled=!!typing/,'Empêche les nouveaux envois pendant la réponse');
+console.log('OK : écriture progressive et cycle de vie des réponses.');
