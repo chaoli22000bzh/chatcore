@@ -128,3 +128,25 @@ assert.ok(pdfLab.includes("event.detail.file!=='factureorange.pdf'"),'Autres fic
 readerChat.restart();
 assert.equal(readerChat.getState().facts.readerOpened,false,'Réinitialisation de la trace Reader');
 console.log('OK : test 8 lecteur PDF, comparaison conditionnelle et absence de fausses observations.');
+
+const repairChat=core.create(context.ChatCorePdfDemo);
+assert.equal(repairChat.getState().facts.pdfAssociationChanged,false);
+assert.equal(repairChat.getState().facts.repairVerified,false);
+assert.equal(repairChat.send('repair-check'),true);
+assert.match(repairChat.getState().history.at(-1).text,/toujours par défaut avec Chrome/);
+repairChat.setFacts({readerOpened:true});
+assert.equal(repairChat.send('repair-check'),true);
+assert.match(repairChat.getState().history.at(-1).text,/pas encore vérifié/,'Reader ouvert manuellement ne répare pas par défaut');
+repairChat.setFacts({pdfAssociationChanged:true});
+assert.equal(repairChat.send('repair-check'),true);
+assert.match(repairChat.getState().history.at(-1).text,/préfère rouvrir/,'Association seule ne suffit pas');
+repairChat.setFacts({repairVerified:true});
+assert.equal(repairChat.send('repair-check'),true);
+assert.match(repairChat.getState().history.at(-1).text,/problème est résolu/);
+assert.ok(pdfLab.includes("addEventListener('c2win:association-change'"),'Changement réel reçu depuis Windows');
+assert.ok(pdfLab.includes("trace.slice(changedAt+1)"),'Réouverture requise après changement');
+assert.ok(pdfLab.includes("e.file==='factureorange.pdf'&&e.app==='reader'"),'Vérification restreinte au bon PDF et à Reader');
+assert.ok(pdfLab.includes("win.state.association['.pdf']==='reader'"),'Association active vérifiée dans l’état Windows');
+repairChat.restart();
+assert.equal(repairChat.getState().facts.repairVerified,false,'Réinitialisation');
+console.log('OK : test 9, correction réelle et réouverture obligatoires.');
